@@ -1,4 +1,5 @@
 import GetRandomWord
+import Database.db
 
 def selectDifficulty():
     difficulty = input('Select difficulty: Easy, Intermediate, Hard: ')
