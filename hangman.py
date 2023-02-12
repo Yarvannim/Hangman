@@ -1,27 +1,15 @@
-import requests
-import random
-import json
-
-def getWordFromApi(_length):
-    _response = requests.get("https://random-word-api.herokuapp.com/word?length=" + str(_length))
-    _json = json.loads(_response.text)
-    _word = _json[0]
-    print(_word)
-    return _word
+import GetRandomWord
 
 def selectDifficulty():
     difficulty = input('Select difficulty: Easy, Intermediate, Hard: ')
     if(difficulty == "Easy"):
-        _wordLength = random.randint(3,6)
-        _word = getWordFromApi(_wordLength)
+        _word = GetRandomWord.getEasyWord()
         return _word
     elif(difficulty == 'Intermediate'):
-        _wordLength = random.randint(7,8)
-        _word = getWordFromApi(_wordLength)
+        _word = GetRandomWord.getIntermediateWord()
         return _word
     elif(difficulty == 'Hard'):
-        _wordLength = random.randint(9,15)
-        _word = getWordFromApi(_wordLength)
+        _word = GetRandomWord.getHardWord()
         return _word
     else:
         print('You did not choose a valid option, Choose a valid option')
@@ -29,10 +17,12 @@ def selectDifficulty():
 
 def playAgain():
     agian = input('Do you wish to play again? Yes or No? ')
-    if(agian == 'Yes' or 'Y' ):
+    print(agian)
+    if(agian == 'Yes' or agian == 'Y'):
         play()
     else:
-        print('Have a good one!')    
+        print('Have a good one!')
+        exit()    
 
 def play():
     _word = selectDifficulty()
