@@ -4,8 +4,8 @@ For the first week of school at fontys we were told to design a hangman game for
 - the standard hangman game
 - Random words from an API
 - Difficulty selector
-- Login
 
 ## Possible features that i might make if i have too much time
 - Database with high scores
 - Player levels
+- Login
