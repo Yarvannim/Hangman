@@ -1,5 +1,4 @@
-from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData, inspect, select,insert
-from sqlalchemy.orm import Session
+from sqlalchemy import create_engine, Table, Column, Integer, String, MetaData, select,insert
 import bcrypt
 
 # create engine to connect to db

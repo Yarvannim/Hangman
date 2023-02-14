@@ -4,6 +4,7 @@ import pwinput
 
 #function that runs to get the register or login 'screen'
 def start():
+    print('Welcome to the word guessing game!')
     _choice = input('Do you want to register or login?: ')
     if(_choice == 'register'):
         register()
@@ -12,6 +13,17 @@ def start():
     else:
         print('Please choose one of the given choices')
         start()
+
+# function that returns a smiley that get a little bit sadder with every life that is lost
+def displaySmiley(_stage):
+    _smiley = ''
+    if(_stage == 6): _smiley=':)'
+    elif(_stage == 5): _smiley=':}'
+    elif(_stage == 4): _smiley=':]'
+    elif(_stage == 3): _smiley=':{'
+    elif(_stage == 2): _smiley=':['
+    elif(_stage == 1): _smiley=':('
+    return _smiley
 
 # Sends username and password to register in db.py file, if username is already taken it will tell you
 def register():
@@ -79,6 +91,8 @@ def play():
     while(_lives > 0 and not _wordguessed):
         # variable to display the word with underscores and characters once they are guessed
         _wordProgress = ''
+        smile = displaySmiley(_lives)
+        print(str(_lives) + ' life(s) left ' + smile)
         guess = input('Guess a character: ')
         # only if the guess length is equal to one it will actually do something with the guess
         if(len(guess) == 1):
@@ -106,7 +120,7 @@ def play():
             print('You can only guess one character at a time')
     # if the user has guessed the word it will congratulate you and otherwise it will tell you what the word was and run the playagain function
     if _wordguessed:
-        print('Well played, you guessed the word!')
+        print('Well played, you won the wordguessing game!')
     else:
         print('Sorry you do not have any tries left :( the word was: ' + _word)
     playAgain()
