@@ -1,4 +1,40 @@
 import GetRandomWord
+import Database.db
+import pwinput
+
+
+def start():
+    _choice = input('Do you want to register or login?: ')
+    if(_choice == 'register'):
+        register()
+    elif(_choice == 'login'):
+        login()
+    else:
+        print('Please choose one of the given choices')
+        start()
+
+def register():
+    _username = input('Please enter your username: ')
+    _password = pwinput.pwinput(prompt='Please enter your password: ')
+    _registerstatus = Database.db.register(_username, _password)
+    if(_registerstatus == False):
+        print(_registerstatus[1])
+    else:
+        print('You registered successfully')
+        print('Redirecting to login screen')
+        print('- - - - - - - - -')
+        login()
+
+def login():
+    _username = input('Please enter your username: ')
+    _password = pwinput.pwinput(prompt='Please enter your password: ')
+    _loginData = Database.db.login(_username, _password)
+    if(_loginData[0] == True):
+        print('Welcome', _loginData[1])
+        play()
+    else:
+        print("Your login credentials don't exist in our system")
+        start()
 
 def selectDifficulty():
     difficulty = input('Select difficulty: Easy, Intermediate, Hard: ')
@@ -61,8 +97,7 @@ def play():
     playAgain()
 
 def main():
-    play()
-
+    start()
 
 main()
 
