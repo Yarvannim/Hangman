@@ -49,7 +49,7 @@ def selectDifficulty():
         return _word
     else:
         print('You did not choose a valid option, Choose a valid option')
-        difficulty = input('Select difficulty: Easy, Intermediate, Hard: ')
+        selectDifficulty()
 
 def playAgain():
     agian = input('Do you wish to play again? Yes or No? ')
@@ -71,12 +71,10 @@ def play():
         _wordProgress = ''
         guess = input('Guess a character: ')
         if(len(guess) == 1):
+            _guessedCharacters.append(guess)
             if(guess not in _word):
-                _guessedCharacters.append(guess)
                 print(guess + ' is not in the word')
                 _lives -=1
-            elif(guess in _word):
-                _guessedCharacters.append(guess)
             for character in _word:
                 if(character in _guessedCharacters):
                     _wordProgress += character
