@@ -20,8 +20,7 @@ def register(_username, _password):
     _conn = _engine.connect()
     _result = _conn.execute(_stmt)
     if(_result.rowcount == 1):
-        _error = 'Your username has already been taken'
-        return False,_error
+        return False
     else:
         _hashedPassword = bcrypt.hashpw(_password.encode('utf8'), bcrypt.gensalt())
         _stmt = insert(users).values(username = _username, password = _hashedPassword)
@@ -29,6 +28,7 @@ def register(_username, _password):
         _conn.execute(_stmt)
         _conn.commit()
         _conn.close()
+        return True
     
 # login function that looks for the username, and checks the hashed password if it has found a user since password is hashed i cant use the variable in select statement
 def login(_username, _password):

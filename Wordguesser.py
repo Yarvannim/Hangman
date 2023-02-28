@@ -5,14 +5,14 @@ import pwinput
 #function that runs to get the register or login 'screen'
 def start():
     print('Welcome to the word guessing game!')
-    _choice = input('Do you want to register or login?: ')
-    if(_choice == 'register'):
-        register()
-    elif(_choice == 'login'):
-        login()
-    else:
-        print('Please choose one of the given choices')
-        start()
+    while True:
+        _choice = input('Do you want to register or login?: ')
+        if(_choice == 'register'):
+            return 1
+        elif(_choice == 'login'):
+            return 2
+        else:
+            print('Please choose one of the given choices')
 
 # function that returns a smiley that get a little bit sadder with every life that is lost
 def displaySmiley(_stage):
@@ -30,14 +30,17 @@ def register():
     _username = input('Please enter your username: ')
     _password = pwinput.pwinput(prompt='Please enter your password: ')
     _registerstatus = Database.db.register(_username, _password)
-    if(_registerstatus == False):
-        print(_registerstatus[1])
-        start()
+    while(_registerstatus == False):
+        _username = input('Please enter your username: ')
+        _password = pwinput.pwinput(prompt='Please enter your password: ')
+        _registerstatus = Database.db.register(_username, _password)
+        if(_registerstatus == False):
+            print('Your credentials have already been taken!')
     else:
         print('You registered successfully')
         print('Redirecting to login screen')
         print('- - - - - - - - -')
-        login()
+        return True
 
 # Sends username and password to login function in db.py if the user is found it prints welcome and otherwise it will say user is not known
 def login():
@@ -46,36 +49,35 @@ def login():
     _loginData = Database.db.login(_username, _password)
     if(_loginData[0] == True):
         print('Welcome', _loginData[1])
-        play()
+        return True
     else:
         print("Your login credentials don't exist in our system")
-        start()
+        return False
 
 # in this function the user selects a difficulty it will go to the GetRandomWord.py file to get a word
 def selectDifficulty():
-    difficulty = input('Select difficulty: Easy, Intermediate, Hard: ')
-    if(difficulty == "Easy"):
-        _word = GetRandomWord.getEasyWord()
-        return _word
-    elif(difficulty == 'Intermediate'):
-        _word = GetRandomWord.getIntermediateWord()
-        return _word
-    elif(difficulty == 'Hard'):
-        _word = GetRandomWord.getHardWord()
-        return _word
-    else:
-        print('You did not choose a valid option, Choose a valid option')
-        selectDifficulty()
+    while True:
+        difficulty = input('Select difficulty: Easy, Intermediate, Hard: ')
+        if(difficulty == "Easy"):
+            _word = GetRandomWord.getEasyWord()
+            return _word
+        elif(difficulty == 'Intermediate'):
+            _word = GetRandomWord.getIntermediateWord()
+            return _word
+        elif(difficulty == 'Hard'):
+            _word = GetRandomWord.getHardWord()
+            return _word
+        else:
+            print('You did not choose a valid option, Choose a valid option')
 
 # in this function you ask if the user wants to play again and if yes you just rerun the play function
 def playAgain():
     agian = input('Do you wish to play again? Yes or No? ')
-    print(agian)
     if(agian == 'Yes' or agian == 'Y'):
-        play()
+        return True
     else:
         print('Have a good one!')
-        exit()    
+        exit()
 
 # basically the main function of the whole program, many comments that are not really needed but wanted it to be clear
 def play():
@@ -123,10 +125,18 @@ def play():
         print('Well played, you won the wordguessing game!')
     else:
         print('Sorry you do not have any tries left :( the word was: ' + _word)
-    playAgain()
 # just the main function in which you start the whole game
 def main():
-    start()
-
+    _playstate = True
+    _loginstatus = False
+    _status = start()
+    if(_status == 1):
+        register()
+    while(_loginstatus == False):
+        _loginstatus = login()
+    while(_playstate == True):
+        play()
+        _playstate == playAgain()
+        
 main()
 
