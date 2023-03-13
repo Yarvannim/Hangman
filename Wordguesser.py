@@ -73,11 +73,11 @@ def selectDifficulty():
 # in this function you ask if the user wants to play again and if yes you just rerun the play function
 def playAgain():
     agian = input('Do you wish to play again? Yes or No? ')
-    if(agian == 'Yes' or agian == 'Y'):
+    if(agian == 'Yes' or agian == 'Y' or agian == 'yes' or agian == 'y'):
         return True
     else:
         print('Have a good one!')
-        exit()
+        return False
 
 # basically the main function of the whole program, many comments that are not really needed but wanted it to be clear
 def play():
@@ -136,7 +136,7 @@ def main():
         _loginstatus = login()
     while(_playstate == True):
         play()
-        _playstate == playAgain()
-        
+        _playstate = playAgain()
+    print('Thank you for playing our guess the word game')
 main()
 
