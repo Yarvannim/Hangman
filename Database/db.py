@@ -19,7 +19,7 @@ def register(_username, _password):
     _stmt = select(users).where(users.c.username == _username)
     _conn = _engine.connect()
     _result = _conn.execute(_stmt)
-    if(_result.rowcount == 1):
+    if (_result.rowcount == 1):
         return False
     else:
         _hashedPassword = bcrypt.hashpw(_password.encode('utf8'), bcrypt.gensalt())
@@ -35,7 +35,7 @@ def login(_username, _password):
     _stmt = select(users).where(users.c.username == _username)
     _conn = _engine.connect()
     _result = _conn.execute(_stmt)
-    if(_result.rowcount == 1):
+    if (_result.rowcount == 1):
         for row in _result:
             _pwInDb = row[2]
         if bcrypt.checkpw(_password.encode('utf8'), _pwInDb.encode('utf8')):
